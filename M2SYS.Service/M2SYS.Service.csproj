@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\M2SYS.Domain\M2SYS.Domain.csproj" />
+      <ProjectReference Include="..\M2SYS.Repo\M2SYS.Repo.csproj" />
+    </ItemGroup>
+
+</Project>

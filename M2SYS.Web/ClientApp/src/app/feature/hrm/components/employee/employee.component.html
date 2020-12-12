@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-12 text-center py-4 page-title">
+    <h3>Emplyee List</h3>
+  </div>
+</div>
+<form #formDirective="ngForm" [formGroup]="employeeForm">
+  <div class="row col-md-12 offset-md-1">
+    <div class="col-md-2 mt-2">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>First Name </mat-label>
+        <input matInput formControlName="firstName">
+        <mat-error *ngIf="employeeForm.controls['firstName'].hasError('required')">
+          First Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2 mt-2">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Middle Name </mat-label>
+        <input matInput formControlName="middleName">
+        <mat-error *ngIf="employeeForm.controls['middleName'].hasError('required')">
+          Middle Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2 mt-2">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Last Name </mat-label>
+        <input matInput formControlName="lastName">
+        <mat-error *ngIf="employeeForm.controls['lastName'].hasError('required')">
+          Last Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2 mt-2">
+      <mat-form-field class="full-width-input" appearance="outline">
+        <mat-label>Date of Birth</mat-label>
+        <input (click)="dobDate.open()" [max]="today" (focus)="dobDate.open()" matInput formControlName="dob"
+               [matDatepicker]='dobDate' placeholder="Choose DOB">
+        <mat-datepicker-toggle matSuffix [for]="dobDate"></mat-datepicker-toggle>
+        <mat-datepicker #dobDate></mat-datepicker>
+        <mat-error *ngIf="employeeForm.controls['dob'].hasError('required')">
+          Date of Birth is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2 mt-2">
+      <mat-form-field class="full-width-input" appearance="outline">
+        <mat-label>Joining Date</mat-label>
+        <input (click)="joinDate.open()" [min]="today" (focus)="joinDate.open()" matInput formControlName="joiningDate"
+               [matDatepicker]='joinDate' placeholder="Choose Join Date">
+        <mat-datepicker-toggle matSuffix [for]="joinDate"></mat-datepicker-toggle>
+        <mat-datepicker #joinDate></mat-datepicker>
+        <mat-error *ngIf="employeeForm.controls['joiningDate'].hasError('required')">
+          Join Date is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row col-md-10 offset-md-1">
+    <div class="col-md-5">
+      <mat-form-field appearance="outline">
+        <mat-label>Designation</mat-label>
+        <mat-select formControlName="designation">
+          <mat-option *ngFor="let item of designations" [value]="item.key">
+            {{item.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-5">
+      <mat-form-field appearance="outline">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="department">
+          <mat-option *ngFor="let item of departments" [value]="item.key">
+            {{item.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2 mt-2">
+      <button mat-stroked-button color="primary" class="btn btn-primary" [disabled]="!employeeForm.valid" (click)='save(formDirective)'>
+        {{ employeeForm.controls['id'].value ? 'Update' : 'Add' }}
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="offset-md-8 col-md-3">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search By Date(MM/DD/YYYY) Or Name">
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="row">
+  <div class="offset-md-1 col-md-10">
+    <div class='region-root-list mat-elevation-z8'>
+      <table mat-table [dataSource]="dataSource" matSort >
+        <ng-container matColumnDef="sl">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> SL#. </th>
+          <td mat-cell *matCellDef="let element; let i = index;"> {{ (pagination.pageSize*pagination.pageIndex) +(i + 1) }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="middleName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dob">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> DOB </th>
+          <td mat-cell *matCellDef="let element"> {{element.dob  | localTime:'DD MMM YYYY'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="joiningDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Joining Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.joiningDate  | localTime:'DD MMM YYYY'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="designation">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Designation </th>
+          <td mat-cell *matCellDef="let element"> {{element.employeeDesignation}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+          <td mat-cell *matCellDef="let element"> {{element.employeeDepartment}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button type="button" class="btn btn-sm btn-primary mr-1" (click)='manageLeave(element)'><i class="fa fa-edit"></i> Manage Leave</button>
+            <button type="button" class="btn btn-sm btn-primary mr-1" (click)='edit(element.id)'><i class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-sm btn-danger" (click)='delete(element.id)'><i class="fa fa-remove"></i></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="pagination.pageSizes" [pageSize]="pagination.pageSize" [pageIndex]="pagination.pageIndex" [length]="pagination.totalCount" (page)="changePage($event)"></mat-paginator>
+    </div>
+  </div>
+</div>
+
