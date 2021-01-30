@@ -3,7 +3,7 @@ using M2SYS.Domain.Entities;
 using M2SYS.Repo.Interface;
 using M2SYS.Service.Interface;
 
-namespace M2SYS.Service
+namespace M2SYS.Core
 {
     public class LeaveService: ILeaveService
     {

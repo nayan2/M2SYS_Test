@@ -1,12 +1,13 @@
+using System.Reflection;
 using Lamar;
 using Lamar.Diagnostics;
 using M2SYS.Infrastructure.Context;
 using M2SYS.Repo.Interface;
 using M2SYS.Service.Interface;
 using M2SYS.Web.Filter;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ using Newtonsoft.Json;
 
 namespace M2SYS.Web
 {
-    public class Startup
+    public class Startup 
     {
         private IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
@@ -58,9 +59,10 @@ namespace M2SYS.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            // This adds Lamar's validation to the 
+            // This adds Lamar's validation to the
             // Oakton.AspNetCore environment check support
             services.CheckLamarConfiguration();
+            services.AddMediatR(Assembly.Load("M2SYS.Core"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

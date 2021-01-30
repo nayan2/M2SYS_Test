@@ -1,8 +1,9 @@
-﻿using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using M2SYS.Core.Command;
+using M2SYS.Core.Query;
 using M2SYS.Domain.Entities;
 using M2SYS.Service.Interface;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,38 +14,45 @@ namespace M2SYS.Web.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
-        public EmployeeController(IEmployeeService employeeService)
+        private readonly IMediator _mediator;
+        public EmployeeController(IEmployeeService employeeService, IMediator mediator)
         {
             _employeeService = employeeService;
+            _mediator = mediator;
         }
         
         [HttpGet("{id:long}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(long id)
         {
-            return Ok(await _employeeService.GetEmployeeById(id));
+            var query = new GetEmployeeByIdQuery(id);
+            var result = await this._mediator.Send(query);
+            return result != null ? Ok(result) : NoContent();
         }
         
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Gets(int pageIndex, int pageSize, string searchTerm)
         {
-            return Ok(await _employeeService.GetEmployees(searchTerm, pageIndex, pageSize));
+            var query = new GetPagedEmployeeQuery(pageIndex, pageSize, searchTerm);
+            var result = await this._mediator.Send(query);
+            return result != null ? Ok(result) : NoContent();
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Add(Employee employee)
+        public async Task<IActionResult> Add(AddEmployeeCommand employee)
         {
-            var newEmployee = await _employeeService.AddEmployee(employee);
-            return CreatedAtAction(nameof(Add), new { id = newEmployee.Id }, newEmployee);
+            var response = await this._mediator.Send(employee);
+            return CreatedAtAction(nameof(Add), new { id = response.Id }, response);
         }
 
         [HttpPut("{id:long}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Edit(long id, Employee employee)
+        public async Task<IActionResult> Edit(long id, EditEmployeeCommand employee)
         {
-            return Ok(await _employeeService.EditEmployee(employee));
+            var result = await this._mediator.Send(employee);
+            return result ? Ok() : BadRequest("Invalid Employee");
         }
 
         [HttpDelete("{id:long}")]

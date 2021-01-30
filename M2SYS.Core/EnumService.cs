@@ -3,7 +3,7 @@ using M2SYS.Service.Interface;
 using M2SYS.Utility.Enum;
 using M2SYS.Utility.Extension;
 
-namespace M2SYS.Service
+namespace M2SYS.Core
 {
     public class EnumService : IEnumService
     {

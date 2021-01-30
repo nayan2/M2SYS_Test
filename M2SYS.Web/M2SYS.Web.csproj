@@ -16,6 +16,8 @@
   <ItemGroup>
     <PackageReference Include="Lamar.Diagnostics" Version="1.1.8" />
     <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
@@ -33,8 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\M2SYS.Core\M2SYS.Core.csproj" />
     <ProjectReference Include="..\M2SYS.Infrustructure\M2SYS.Infrustructure.csproj" />
-    <ProjectReference Include="..\M2SYS.Service\M2SYS.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

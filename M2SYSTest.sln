@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2SYS.Utility", "M2SYS.Util
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2SYS.Repo", "M2SYS.Repo\M2SYS.Repo.csproj", "{B77BA029-B382-4090-B5FC-0CB68B8D409F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2SYS.Service", "M2SYS.Service\M2SYS.Service.csproj", "{2CB8441A-FFAD-4814-B2C3-35B5E163F93E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M2SYS.Core", "M2SYS.Core\M2SYS.Core.csproj", "{2CB8441A-FFAD-4814-B2C3-35B5E163F93E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

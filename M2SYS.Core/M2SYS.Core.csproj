@@ -2,11 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>M2SYS.Core</AssemblyName>
+        <RootNamespace>M2SYS.Core</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\M2SYS.Domain\M2SYS.Domain.csproj" />
       <ProjectReference Include="..\M2SYS.Repo\M2SYS.Repo.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
     </ItemGroup>
 
 </Project>
